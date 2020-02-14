@@ -1,0 +1,45 @@
+{
+  "name": "@hectorricardo/cors-proxy",
+  "version": "1.0.5",
+  "description": "A simple, local, easy-to-setup proxy server with CORS enabled.",
+  "main": "index.js",
+  "keywords": [
+    "cors",
+    "proxy"
+  ],
+  "homepage": "https://github.com/HectorRicardo/cors-proxy",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HectorRicardo/cors-proxy"
+  },
+  "author": "Hector Ricardo",
+  "license": "MIT",
+  "bin": {
+    "cors-proxy": "./index.js"
+  },
+  "dependencies": {
+    "cookie": "^0.4.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "http-proxy-middleware": "^0.20.0",
+    "morgan": "^1.9.1",
+    "set-cookie-parser": "^2.4.1",
+    "yargs": "^15.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.20.0",
+    "eslint-plugin-jsdoc": "^20.3.0",
+    "husky": "^4.0.6",
+    "lint-staged": "^9.5.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": "eslint"
+  }
+}
