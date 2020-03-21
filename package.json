@@ -1,6 +1,6 @@
 {
   "name": "@hectorricardo/cors-proxy",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "A simple, local, easy-to-setup proxy server with CORS enabled.",
   "main": "index.js",
   "keywords": [
