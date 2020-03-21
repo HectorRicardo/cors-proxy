@@ -49,18 +49,21 @@ const DEFAULT_PORT_NUMBER = 3003;
 
 
 /**
- * In case the server is communicating through https, marks the cookies as insecure so they don't
- * get ignored by browsers.
- * Remember: this proxy runs (can only run) in http.
+ * Modifies received cookies from the target server such as:
+ * - they are marked as insecure (because this proxy runs on insecure http).
+ * - sameSite is none.
+ * This will prevent the cookie from getting ignored by the browser.
+ * UPDATE: All cross-site insecure cookies are ignored. TODO: make this proxy run in https as well.
  *
  * @param {IncomingMessage} targetResponse - the target server's response.
  */
-function markCookiesAsNotSecure(targetResponse) {
+function modifyCookies(targetResponse) {
   const cookiesToSet = setCookieParser.parse(targetResponse);
   const setCookieHeaders = targetResponse.headers['set-cookie'];
   cookiesToSet.forEach((cookie, idx) => {
-    if (cookie.secure) {
+    if (cookie.secure || cookie.sameSite !== 'none') {
       delete cookie.secure;
+      cookie.sameSite = 'none';
       setCookieHeaders[idx] = setCookieSerializer.serialize(cookie.name, cookie.value, cookie);
     }
   });
@@ -73,7 +76,7 @@ function markCookiesAsNotSecure(targetResponse) {
  * @param {IncomingMessage} targetResponse - the target server's response.
  */
 function onProxyRes(targetResponse) {
-  markCookiesAsNotSecure(targetResponse);
+  modifyCookies(targetResponse);
 }
 
 /**
